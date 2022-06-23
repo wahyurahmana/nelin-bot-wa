@@ -5,13 +5,6 @@ const {
     LegacySessionAuth
 } = require('whatsapp-web.js');
 
-//scan qr code for login
-client.on('qr', qr => {
-    qrcode.generate(qr, {
-        small: true
-    });
-});
-
 // Path where the session data will be stored
 const SESSION_FILE_PATH = './session.json';
 
@@ -35,6 +28,13 @@ client.on('authenticated', (session) => {
         if (err) {
             console.error(err);
         }
+    });
+});
+
+//scan qr code for login
+client.on('qr', qr => {
+    qrcode.generate(qr, {
+        small: true
     });
 });
 
