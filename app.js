@@ -30,10 +30,14 @@ message.reply(`Ini Nama Daerah Yang Bisa Dicek Cuacanya
         axios({
             url : `http://dataservice.accuweather.com/currentconditions/v1/205207?apikey=${process.env.API_KEY_ACCUWEATHER}&language=id-id`
         })
-            .then(({data}) => {
-                message.reply(`Nelin Mendapatkan Informasi Bahwa Cuacanya ${data[0].WeatherText} Dengan Temperature ${data[0].Temperature.Metric.Value}${data[0].Temperature.Metric.Unit}`)
+            .then((result) => {
+                console.log
+                message.reply(`Nelin Mendapatkan Informasi Bahwa Cuacanya ${result.data[0].WeatherText} Dengan Temperature ${result.data[0].Temperature.Metric.Value}${result.data[0].Temperature.Metric.Unit}`)
             })
-            .catch(err => message.reply('maaf nelin tidak mengerti'))
+            .catch((err) => {
+                console.log(err)
+                message.reply('maaf nelin tidak mengerti')
+            })
     }
 
     else{
