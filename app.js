@@ -1,5 +1,6 @@
 const qrcode = require('qrcode-terminal');
 const axios = require('axios')
+const fs = require('fs')
 const {
     Client,
     LegacySessionAuth
