@@ -30,7 +30,7 @@ client.on('message', message => {
         '*sumbawa*')
     } else if (message.body === '-cuaca sumbawa') {
         axios({
-                url: `http://dataservice.accuweather.com/currentconditions/v1/205207?apikey=${process.env.API_KEY_ACCUWEATHER}&language=id-id`
+                url: 'http://dataservice.accuweather.com/currentconditions/v1/205207?apikey='+`${process.env.API_KEY_ACCUWEATHER}`+'&language=id-id'
             })
             .then((result) => {
                 console.log
