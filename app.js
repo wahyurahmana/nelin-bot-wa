@@ -3,6 +3,8 @@ const axios = require('axios')
 const { Client } = require('whatsapp-web.js');
 const client = new Client();
 
+client.initialize();
+
 //scan qr code for login
 client.on('qr', qr => {
     qrcode.generate(qr, {small: true});
@@ -44,5 +46,3 @@ message.reply(`Ini Nama Daerah Yang Bisa Dicek Cuacanya
         message.reply('maaf nelin tidak mengerti')
     }
 });
-
-client.initialize();
