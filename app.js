@@ -1,36 +1,9 @@
 const qrcode = require('qrcode-terminal');
 const axios = require('axios')
-const fs = require('fs')
 const {
-    Client,
-    LegacySessionAuth
+    Client
 } = require('whatsapp-web.js');
-
-// Path where the session data will be stored
-const SESSION_FILE_PATH = './session.json';
-
-// Load the session data if it has been previously saved
-let sessionData;
-if(fs.existsSync(SESSION_FILE_PATH)) {
-    sessionData = require(SESSION_FILE_PATH);
-}
-
-// Use the saved values
-const client = new Client({
-    authStrategy: new LegacySessionAuth({
-        session: sessionData
-    })
-});
-
-// Save session values to the file upon successful auth
-client.on('authenticated', (session) => {
-    sessionData = session;
-    fs.writeFile(SESSION_FILE_PATH, JSON.stringify(session), (err) => {
-        if (err) {
-            console.error(err);
-        }
-    });
-});
+const client = new Client();
 
 //scan qr code for login
 client.on('qr', qr => {
@@ -47,12 +20,13 @@ client.on('ready', () => {
 //menerima inputan
 client.on('message', message => {
     if (message.body === '-help') {
-    message.reply('Hai, Saya Nelin.'+ "\n" +
-    'Ada Yang Bisa Nelin Bantu ?Nelin Menerima Perintah :'+ "\n" +
-    '*-cuaca <nama_daerah>*');
+        message.reply('Hai, Saya Nelin.'+'\n'+
+        'Ada Yang Bisa Nelin Bantu ?'+'\n'+
+        'Nelin Menerima Perintah : '+'\n'+
+        '*-cuaca <nama_daerah>*')
     } else if (message.body === '-cuaca list-nama-daerah') {
-        message.reply('Ini Nama Daerah Yang Bisa Dicek Cuacanya'+ "\n" +
-        '*sumbawa*');
+        message.reply('Ini Nama Daerah Yang Bisa Dicek Cuacanya'+'\n'+
+        '*sumbawa*')
     } else if (message.body === '-cuaca sumbawa') {
         axios({
                 url: `http://dataservice.accuweather.com/currentconditions/v1/205207?apikey=${process.env.API_KEY_ACCUWEATHER}&language=id-id`
@@ -65,6 +39,16 @@ client.on('message', message => {
                 console.log(err)
                 message.reply('maaf nelin tidak mengerti')
             })
+    } else if (message.body === '-gempa') {
+        axios({
+                url: "https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json",
+                method: 'GET'
+            })
+            .then((result) => {
+                message.reply(`Nelin Dapat Info Bahwa Di Wilayah *${result.data.Infogempa.gempa.Wilayah}*, Dengan Potensi *${result.data.Infogempa.gempa.Potensi}* Pada Tanggal *${result.data.Infogempa.gempa.Tanggal}* Jam *${result.data.Infogempa.gempa.Jam}*`)
+            }).catch((err) => {
+
+            });
     } else {
         message.reply('maaf nelin tidak mengerti')
     }
