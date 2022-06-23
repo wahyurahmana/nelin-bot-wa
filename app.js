@@ -45,7 +45,13 @@ client.on('message', message => {
                 method: 'GET'
             })
             .then((result) => {
-                message.reply(`Nelin Dapat Info Bahwa Di Wilayah *${result.data.Infogempa.gempa.Wilayah}*, Dengan Potensi *${result.data.Infogempa.gempa.Potensi}* Pada Tanggal *${result.data.Infogempa.gempa.Tanggal}* Jam *${result.data.Infogempa.gempa.Jam}*`)
+                message.reply('Nelin Dapat Info Bahwa: '+"\n"+
+                result.data.Infogempa.gempa.Wilayah+"\n"+
+                'Dengan Potensi: '+result.data.Infogempa.gempa.Potensi+"\n"+
+                'Pada Tanggal: '+result.data.Infogempa.gempa.Tanggal+"\n"+
+                'Jam: '+result.data.Infogempa.gempa.Jam+"\n"+
+                'Magnitudo: '+result.data.Infogempa.gempa.Magnitude+"\n"+
+                'Kedalaman: '+result.data.Infogempa.gempa.Kedalaman+"\n")
             }).catch((err) => {
 
             });
