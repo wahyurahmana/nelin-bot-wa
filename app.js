@@ -23,7 +23,8 @@ client.on('message', message => {
         message.reply('Hai, Saya Nelin.'+'\n'+
         'Ada Yang Bisa Nelin Bantu ?'+'\n'+
         'Nelin Menerima Perintah : '+'\n'+
-        '*-cuaca <nama_daerah>*')
+        '*-cuaca <nama_daerah>*'+'\n'+
+        '*-gempa*')
     } else if (message.body === '-cuaca list-nama-daerah') {
         message.reply('Ini Nama Daerah Yang Bisa Dicek Cuacanya'+'\n'+
         '*sumbawa*')
