@@ -23,18 +23,23 @@ client.on('message', message => {
         message.reply('Hai, Saya Nelin.'+'\n'+
         'Ada Yang Bisa Nelin Bantu ?'+'\n'+
         'Nelin Menerima Perintah : '+'\n'+
-        '*-cuaca <nama_daerah>*'+'\n'+
+        '*-cuaca list-nama-daerah*'+'\n'+
+        '*-cuaca <nama_provinsi>*'+'\n'+
         '*-gempa*')
     } else if (message.body === '-cuaca list-nama-daerah') {
         message.reply('Ini Nama Daerah Yang Bisa Dicek Cuacanya'+'\n'+
         '*sumbawa*')
-    } else if (message.body === '-cuaca sumbawa') {
+    } else if (message.body === '-cekcuaca ntb') {
         axios({
-                url: 'http://dataservice.accuweather.com/currentconditions/v1/205207?apikey='+`${process.env.API_KEY_ACCUWEATHER}`+'&language=id-id'
+                url: 'http://18.141.223.254:5000/ntb'
             })
-            .then((result) => {
-                console.log
-                message.reply(`Nelin Mendapatkan Informasi Bahwa Cuacanya ${result.data[0].WeatherText} Dengan Temperature ${result.data[0].Temperature.Metric.Value}${result.data[0].Temperature.Metric.Unit}`)
+            .then(({data}) => {
+                let str = ""
+                data.area.forEach(el => {
+                    let i = `Daerah : ${el.daerah}, cuaca hari ini : ${el.cuaca.hariIni}, cuaca besok : ${el.cuaca.besok} dan cuaca lusa : ${el.cuaca.lusa}, ini prediksi pada jam 6 sore ya kak, hanya prediksi loh ya \n\n`
+                    str += i
+                });
+                message.reply(str)
             })
             .catch((err) => {
                 console.log(err)
