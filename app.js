@@ -24,14 +24,31 @@ client.on('message', message => {
         'Ada Yang Bisa Nelin Bantu ?'+'\n'+
         'Nelin Menerima Perintah : '+'\n'+
         '*-cuaca list-nama-daerah*'+'\n'+
-        '*-cuaca <nama_provinsi>*'+'\n'+
+        '*-cekcuaca <nama_provinsi>*'+'\n'+
         '*-gempa*')
     } else if (message.body === '-cuaca list-nama-daerah') {
         message.reply('Ini Nama Daerah Yang Bisa Dicek Cuacanya'+'\n'+
-        '*sumbawa*')
+        '*ntb*'+'\n'+
+        '*bali*'+'\n')
     } else if (message.body === '-cekcuaca ntb') {
         axios({
                 url: 'http://18.141.223.254:5000/ntb'
+            })
+            .then(({data}) => {
+                let str = ""
+                data.area.forEach(el => {
+                    let i = `Daerah : ${el.daerah}, cuaca hari ini : ${el.cuaca.hariIni}, cuaca besok : ${el.cuaca.besok} dan cuaca lusa : ${el.cuaca.lusa}, ini prediksi pada jam 6 sore ya kak, hanya prediksi loh ya \n\n`
+                    str += i
+                });
+                message.reply(str)
+            })
+            .catch((err) => {
+                console.log(err)
+                message.reply('maaf nelin tidak mengerti')
+            })
+    }else if (message.body === '-cekcuaca bali') {
+        axios({
+                url: 'http://18.141.223.254:5000/bali'
             })
             .then(({data}) => {
                 let str = ""
