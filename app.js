@@ -121,7 +121,7 @@ client.on('message', async (message) => {
                         .then((result) => {
                             message.reply(result)
                         }).catch((err) => {
-                            throw err
+                            message.body('Nelin Lagi Gangguan')
                         });
                    } else {
                         message.reply('maaf nelin tidak mengerti')
