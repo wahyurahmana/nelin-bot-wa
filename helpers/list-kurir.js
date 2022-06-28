@@ -1,0 +1,1 @@
+module.exports = ["jne","pos","jnt","sicepat","sap","ninja"]
